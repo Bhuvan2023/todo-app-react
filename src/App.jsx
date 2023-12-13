@@ -1,34 +1,40 @@
+import React from 'react'
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const [textfield, setTextfield] = useState([])
+  const [inputval, setInputval] = useState("")
+
+const handlechange =(event)=>{
+  setInputval(event.target.value)
+}
+const handleclick = ()=>{
+  const newarr = [...textfield, inputval];
+  setTextfield(newarr)
+}
+
+const deletefun = (todoname)=>{
+  const newval = textfield.filter((todo)=> todo !==todoname);
+  setTextfield(newval)
+}
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div>
+      <div className="todoinput">
+        <input type="text" onChange={handlechange}  />
+        <button onClick={handleclick}>Add</button>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+      <div className="list">
+        {textfield.map((todo)=>{
+          return (
+            <>
+            <p>{todo}</p> <button onClick={()=>deletefun(todo)}>delete</button>
+            </>
+          )
+        })}
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+
+    </div>
   )
 }
 
